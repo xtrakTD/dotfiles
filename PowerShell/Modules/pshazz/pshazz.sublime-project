@@ -1,0 +1,22 @@
+{
+	"folders":
+	[
+		{
+			"file_exclude_patterns":
+			[
+				"*.git*",
+				"*.sublime-*",
+				"*~"
+			],
+			"path": "."
+		},
+		{
+			"path": "C:\\Users\\dmini\\OneDrive\\Documents\\WindowsPowerShell"
+		}
+	],
+	"settings":
+	{
+		"default_line_ending": "windows",
+		"tab_size": 4
+	}
+}
