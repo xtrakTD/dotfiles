@@ -18,7 +18,7 @@ if ($StageConsole)
   }
   else 
   {
-    Write-Error 'Unable to ping host [scom.stage.stage]' -ErrorAction:Continue
+    Write-Warning 'Unable to ping host [scom.stage.stage]' -WarningAction:Continue
   }    
 }
 

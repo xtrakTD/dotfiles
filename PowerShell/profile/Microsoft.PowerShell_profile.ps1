@@ -12,13 +12,13 @@ $scripts = (Get-ChildItem -Path .\profiled\ -Include *.ps* -Recurse -Force).Name
 cd .\profiled
 
 $scripts | %{ 
-    write-host "Sourcing script [ " -NoNewline
+    Wsrite-Host "Sourcing script [ " -NoNewline
 	Write-Host $_ -ForegroundColor White -NoNewline 
-	Write-Hose " ]"     
+	Write-Host " ]"     
 	. ".\$_"
 }
 
 Set-XtrPSHazzTheme
 
-cd \
-clear
+#cd \
+#clear

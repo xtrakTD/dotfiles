@@ -1,5 +1,5 @@
 
-Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope CurrentUser
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope CurrentUser -Force -ErrorAction SilentlyContinue
 
 Test-Administrator -ErrorAction Continue | Out-Null
 

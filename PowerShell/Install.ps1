@@ -53,7 +53,7 @@ if($packageOK) {
 		$fromDir = "$installationRoot\Modules\pshazz"
 		$toDir = "$env:USERPROFILE\scoop\apps\pshazz\current"
 		
-		Copy-Item -Path $fromDir\* -Destination $toDir -Recurse -Force -Verbose
+		Copy-Item -Path $fromDir\* -Destination $toDir -Recurse -Force
 	}
 
 	if((Test-Path -Path $toDir\plugins\xtr.ps1 -PathType Leaf) -eq $true) {
@@ -63,11 +63,11 @@ if($packageOK) {
 	Write-Host 'Installing PS profile'
 	$profileDir = $PROFILE.Replace($PROFILE.Split('\')[$PROFILE.Split('\').Count - 1], '')
 	
-	if((Test-Path $PROFILE -PathType Leaf -ErrorAction SilentlyContinue) -ne $null) {
-		Copy-Item -Path $PROFILE -Destination $PROFILE"_backup"
+	if((Test-Path $PROFILE -PathType Leaf -ErrorAction SilentlyContinue) -eq $true) {
+		Copy-Item -Path $profileDir -Include Microsoft.*.ps1 -Destination $PROFILE"_backup" -Force
 	}
 
-	if((Test-Path $profileDir -PathType Container -ErrorAction SilentlyContinue) -eq $null) {
+	if((Test-Path $profileDir -PathType Container -ErrorAction SilentlyContinue) -eq $false) {
 		mkdir $profileDir -ErrorAction Stop		
 	}
 
@@ -75,13 +75,13 @@ if($packageOK) {
 
 	Write-Host "Installing script sources..."
 
-	if((Test-Path "$profileDir\profiled" -PathType Container -ErrorAction SilentlyContinue) -eq $null) {
-		mkdir "$profileDir\profiled" -ErrorAction Stop
+	if((Test-Path "$profileDir\profiled" -PathType Container -ErrorAction SilentlyContinue) -eq $false) {
+		mkdir ($profileDir+'\profiled') -ErrorAction Stop
 	}
 
-	Copy-Item -Path $installationRoot\profiled -Include *.ps1 -Destination "$profileDir\profiled" -Force -Recurse -Verbose -ErrorAction Stop
+	Copy-Item -Path "$installationRoot\profiled\*" -Include '*.ps1' -Destination "$profileDir\profiled" -Force -Recurse -ErrorAction Stop
 
-	if((Test-Path -Path "$profileDir\profiled\0100.Set-Aliases.ps1" -Pa thType Leaf -ErrorAction SilentlyContinue) -ne $null) {
+	if((Test-Path -Path "$profileDir\profiled\0100.Set-Aliases.ps1" -PathType Leaf -ErrorAction SilentlyContinue) -eq $true) {
 		Write-Host "Script sources installed OK" -ForegroundColor Green
 	}
 

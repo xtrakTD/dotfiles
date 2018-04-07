@@ -47,5 +47,6 @@ Function Set-XtrPSHazzTheme
             }
                         '
     }
-    pshazz init xtr
+    pshazz init 
+    pshazz use xtr
 }
