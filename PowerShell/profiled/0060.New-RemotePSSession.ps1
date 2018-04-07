@@ -7,7 +7,7 @@ Function New-RemotePSSession
         [Parameter(Mandatory=$false, ValueFromPipeline=$false)][PSCredential]$Credentials,
         [Parameter(Mandatory=$false, ValueFromPipeline=$false)][switch]$ConfigureWinRM=$false,
         [Parameter(Mandatory=$false, ValueFromPipeline=$false)][switch]$UseSSL=$false,
-		[Parameter(Mandatory=$false, ValueFromPipeline=$false)][switch]$UseDefaults=$false
+		[Parameter(Mandatory=$false, ValueFromPipeline=$false)][switch]$UseDefaults=$true
     )
 
     if($RemoteServer -match "^(\d(\d{1,2})?\-)(.+)?((web)|(services)|(sql)|(docker))(\d{2})?(.+)?")
@@ -20,9 +20,14 @@ Function New-RemotePSSession
 
 	if(!$Credentials)
     {
-		if($UseDefaults) {
-			$userName = Check-HostUserMap -RemoteHostName $RemoteServer -ErrorAction Continue
-		}
+        Write-Host 'No credentials provided. Trying to find some...'
+
+		if($UseDefaults -and $userName -eq '') {
+            Write-Host 'Using defaults is on'
+
+            $userName = Check-HostUserMap -RemoteHostName $RemoteServer -ErrorAction Continue
+            Write-Host "Will try to find credentials for user: [$userName]"
+        }        
 		
 		$Credentials = Get-WinCreds -userName $userName -ErrorAction SilentlyContinue
 		
@@ -187,7 +192,9 @@ Function New-RemotePSSession
 						Write-Host "[ $currentPool ]" -BackgroundColor DarkRed -ForegroundColor Yellow 
 					}
 				}
-			}
+            }
+            
+            Set-Alias -Name recycle -Value Recycle-IISAppPools -Option AllScope
 
             $sm = New-Object -TypeName 'Microsoft.Web.Administration.ServerManager'
 
@@ -197,7 +204,7 @@ Function New-RemotePSSession
 
             [hashtable]$sites = New-Object -TypeName System.Collections.Hashtable
             $sm.Sites | %{ $sites.Add($_.Name, (New-CustomWebSite -WebSite $_)) }
-			
+            
             cd e:\
             clear
 

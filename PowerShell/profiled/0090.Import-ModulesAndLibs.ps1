@@ -26,6 +26,10 @@ if((Get-Command Get-ChildItemColor -ErrorAction SilentlyContinue) -eq $null)
 {
     Install-Module Get-ChildItemColor -Scope CurrentUser -Force
 }
+else 
+{
+    Import-Module Get-ChildItemColor -ErrorAction Continue -Force
+}
 
 if((Test-Administrator) -eq $true)
 {
@@ -41,3 +45,4 @@ Import-Module PSReadLine
 
 Set-PSReadlineOption -HistorySavePath $env:USERPROFILE\.psreadline\history.txt
 
+Import-Module Write-Ascii -ErrorAction Continue -Force    

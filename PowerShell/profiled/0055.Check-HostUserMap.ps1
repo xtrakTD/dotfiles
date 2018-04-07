@@ -6,7 +6,8 @@ function Check-HostUserMap {
 		[Parameter(Mandatory=$false, ValueFromPipeline=$false)][string]$BypassUsername=$null
 	)
 
-	if($BypassUsername -ne $null -or $BypassUsername -ne '') {
+	if($BypassUsername -ne $null -and $BypassUsername -ne '') {
+		Write-Host "Returning bypass username [$BypassUsername]"
 		return $BypassUsername
 	}
 
@@ -17,31 +18,40 @@ function Check-HostUserMap {
 		($RemoteHostName -match '^\d{1,3}?\-(asb|ad)?(services)(.+)?') -or
 		($RemoteHostName -match '^\d{1,2}?\-(asb|ad)?(sql)(.+)?')) {
 			[bool]$TestStand = $true
+			Write-Host "RemoteHost is a TestStand"
 		}
 	
 		elseif($RemoteHostName -match '^(griffin|rook)(.+)?') {
 			[bool]$TestRail = $true
+			Write-Host "RemoteHost is a TestRail"			
 		}
 
-		elseif($RemoteHostName -match '^\d{1,3}\-(asb|ad|cp)?(docker)(.+)?') {
-			[bool]$BashTerminalSession = $true
+		elseif(($RemoteHostName -match '^\d{1,3}\-(asb|ad|cp)?(docker)(.+)?') -or
+			   ($RemoteHostName -match '^((\w+)?\@)?(\d{1,3}\.){3}\d{1,3}$')) {
+				[bool]$BashTerminalSession = $true
+				Write-Host "RemoteHost is a Linux"			
 		}
 
-		elseif($RemoteHostName -match '^(.+)?(scom|scvmm|stage|heart|chimera') {
+		elseif($RemoteHostName -match '^(.+)?(scom|scvmm|stage|heart|chimera)') {
 			[bool]$StageInfrastructuee = $true
+			Write-Host "RemoteHost is a Infrastructure"			
 		}
 	
 		else {
 			[bool]$ITOnlineConnection=$true
+			Write-Host "RemoteHost is in ITO domain"			
 		}
 	
-	if((Get-ChildItem env:BASEUSERNAME -ErrorAction SilentlyContinue) -eq $null) {
-		$MainUserName = Read-Host -Prompt 'Enter your IT-ONLINE username : '
-		[Environment]::SetEnvironmentVariable('BASEUSERNAME', $MainUserName, 'User')
+	Write-Host "USERNAME is [$env:USERNAME]"
+		
+	if( -not ($env:USERNAME -match '^(\w{1,2})\.(.+)$')) {
+		$MainUserName = Read-Host -Prompt 'Enter your IT-ONLINE username : '		
 	}
 	else {
-		$MainUserName = $env:BASEUSERNAME
+		$MainUserName = $env:USERNAME
 	}
+
+	Write-Host "MainUserName is [$MainUserName]"
 
 	[string]$CredsUserName = ''
 
@@ -64,6 +74,8 @@ function Check-HostUserMap {
 		Write-Host "Couldn't map host [ ""+$RemoteHostName+' ] to user" -BackgroundColor Yellow -ForegroundColor DarkRed
 		$CredsUserName = $env:USERNAME + "@" + $env:USERDOMAIN
 	}
+
+	Write-Host "CredsUserName is [$CredsUserName]"
 
 	return $CredsUserName
 }

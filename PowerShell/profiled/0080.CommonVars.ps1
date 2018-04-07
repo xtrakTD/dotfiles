@@ -12,9 +12,9 @@ if($DetailedOutput)
 
 $ErrorView='NormalView'
 
-[string]$CredsFolder="$env:USERPROFILE\.creds"
+[string]$CredentialsPath="$env:USERPROFILE\.creds"
 
-if(-not (Test-Path -Path $CredsFolder -PathType Container))
+if(-not (Test-Path -Path $CredentialsPath -PathType Container))
 {
     try
     {
@@ -23,7 +23,7 @@ if(-not (Test-Path -Path $CredsFolder -PathType Container))
     catch
     {
         Write-Error $Error[0].ToString() -ErrorAction:Continue
-        $CredsFolder = $env:USERPROFILE
+        $CredentialsPath = $env:USERPROFILE
     }
 }
 

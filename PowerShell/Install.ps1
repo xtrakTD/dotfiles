@@ -1,6 +1,7 @@
 Write-Host 'Installing dotfiles PowerShell profile....' -BackgroundColor Yellow -ForegroundColor DarkRed
 Write-Host 'Checking installation package...'
 
+[string]$profileDir = $PROFILE.Replace($PROFILE.Split('\')[$PROFILE.Split('\').Count - 1], '')
 [bool]$packageOK = $true
 [string]$installationRoot = (Get-Location).Path
 
@@ -23,6 +24,22 @@ else {
 
 if($packageOK) {
 	Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+
+	Write-Host 'Checking Write-Ascii module.'
+	if((Get-Command Write-Ascii -ErrorAction SilentlyContinue) -eq $null)
+	{
+		Write-Host 'Module not found. Installing...'
+		
+		$fromDir = "$installationRoot\Modules\Write-Ascii"
+		$toDir = "$profileDir\Modules\Write-Ascii"
+
+		if ((Test-Path -Path $toDir -PathType Container) -eq $false) {
+			mkdir $toDir -ErrorAction Stop
+		}
+		
+		Copy-Item -Path $fromDir\* -Destination $toDir -Recurse -Force
+	}
+
 	if((Get-Command pshazz -ErrorAction SilentlyContinue) -eq $null) {
 		Write-Host 'PSHAZZ not installed... ' -ForegroundColor Red
 		
@@ -61,7 +78,6 @@ if($packageOK) {
 	}
 
 	Write-Host 'Installing PS profile'
-	$profileDir = $PROFILE.Replace($PROFILE.Split('\')[$PROFILE.Split('\').Count - 1], '')
 	
 	if((Test-Path $PROFILE -PathType Leaf -ErrorAction SilentlyContinue) -eq $true) {
 		Copy-Item -Path $profileDir -Include Microsoft.*.ps1 -Destination $PROFILE"_backup" -Force

@@ -1,0 +1,37 @@
+{
+	"comment": "Dmitry Minin 2018. Made for Literation NF font",
+  "plugins": [ "git", "ssh", "z", "aliases", "xtr" ],
+  "prompt": [
+  	[ "White", "", "$prompt_brakTop"],
+	[ "DarkGray", "Black", " $time " ],
+    [ "Black", "DarkGray", "$rightarrow" ],
+    [ "Gray", "DarkGray", " $path " ],
+    [ "DarkGray", "", "$no_git" ],
+    [ "DarkGray", "Gray", "$yes_git" ],
+    [ "White", "Gray", " $git_lbracket" ],
+    [ "White", "Gray", "$git_branch" ],
+    [ "White", "Gray", " $git_local_state" ],
+    [ "White", "Gray", " $git_remote_state" ],
+    [ "White", "Gray", "$git_rbracket " ],
+    [ "Gray", "", "$yes_git" ],
+    [ "White", "", " `n$prompt_brakBottom" ],
+    [ "Gray", "Black", "$admin_seclineprompt" ],
+    [ "DarkGray", "", "$admin_rightarrow" ],
+    [ "Gray", "Black", "$nonadmin_seclineprompt" ],
+    [ "DarkGray", "", "$nonadmin_rightarrow" ]
+  ],
+  "git": {
+    "prompt_lbracket": "[",
+    "prompt_rbracket": "]",
+    "prompt_unstaged": "*",
+    "prompt_staged": "+",
+		"prompt_stash": "$",
+    "prompt_untracked": "%",
+    "prompt_remote_push": ">",
+    "prompt_remote_pull": "<",
+    "prompt_remote_same": "="
+  },
+  "hg": {
+  	"prompt_dirty": "*"
+	}
+}

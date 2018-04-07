@@ -12,7 +12,7 @@ $scripts = (Get-ChildItem -Path .\profiled\ -Include *.ps* -Recurse -Force).Name
 cd .\profiled
 
 $scripts | %{ 
-    Wsrite-Host "Sourcing script [ " -NoNewline
+    Write-Host "Sourcing script [ " -NoNewline
 	Write-Host $_ -ForegroundColor White -NoNewline 
 	Write-Host " ]"     
 	. ".\$_"
@@ -20,5 +20,8 @@ $scripts | %{
 
 Set-XtrPSHazzTheme
 
-#cd \
-#clear
+cd \
+clear
+
+letters -InputText 'XTR v1.0' -ForegroundColor Green -ErrorAction SilentlyContinue
+$Host.UI.RawUI.WindowTitle = 'XTR v1.0'
