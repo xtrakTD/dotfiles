@@ -1,3 +1,5 @@
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+
 Write-Host 'Installing dotfiles PowerShell profile....' -BackgroundColor Yellow -ForegroundColor DarkRed
 Write-Host 'Checking installation package...'
 
@@ -77,6 +79,20 @@ if($packageOK) {
 		Write-Host 'Update OK' -ForegroundColor Green
 	}
 
+	if((Test-Path -Path "$installationRoot\font\*" -PathType Leaf) -eq $true) {
+		Write-Host 'Installing patched fonts' -ForegroundColor Yellow
+		$objShell = New-Object -ComObject Shell.Application
+		$objFolder = $objShell.Namespace(0x14)
+
+		$Fonts = Get-ChildItem -Path "$installationRoot/font" -Recurse -Include *.ttf,*.otf
+		foreach ($File in $Fonts) {
+			$objFolder.CopyHere($File.fullname)
+		}
+	}
+	else {
+		Write-Host 'Required fonts not found' -BackgroundColor Red -ForegroundColor Yellow
+	}
+
 	Write-Host 'Installing PS profile'
 	
 	if((Test-Path $PROFILE -PathType Leaf -ErrorAction SilentlyContinue) -eq $true) {
@@ -103,6 +119,6 @@ if($packageOK) {
 
 	[string]$start = (Read-Host 'Open new console to apply changes? (Y/N) :')
 	if($start.ToLowerInvariant() -eq 'y' -or $start.ToLowerInvariant() -eq 'yes') {
-		start powershell
+		Start-Process powershell
 	}
 }
