@@ -1,8 +1,8 @@
 #INPUT PARAMS
 
 param(
-    [Parameter(Mandatory=$false)][switch]$StageConsole=$true,
-    [Parameter(Mandatory=$false)][switch]$DetailedOutput=$false
+    [Parameter(Mandatory=$false)][switch]$StageConsole=$false,
+    [Parameter(Mandatory=$false)][switch]$DetailedOutput=$true
 )
 
 $profilePath = $PROFILE.Replace(($PROFILE.Split('\')[$PROFILE.Split('\').Count - 1]), '')
@@ -20,8 +20,9 @@ $scripts | %{
 
 Set-XtrPSHazzTheme
 
-cd \
+cd $env:USERPROFILE
 clear
 
-letters -InputText 'XTR v1.0' -ForegroundColor Green -ErrorAction SilentlyContinue
+# letters -InputText 'XTR v1.0' -ForegroundColor Green -ErrorAction SilentlyContinue
+letters -InputText (Get-ConsoleHeading) -ForegroundColor Green -ErrorAction SilentlyContinue
 $Host.UI.RawUI.WindowTitle = 'XTR v1.0'

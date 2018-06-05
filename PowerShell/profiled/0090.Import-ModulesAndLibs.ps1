@@ -3,24 +3,25 @@
 
 Import-Module PowerShellGet -ErrorAction Stop
 
-if ($StageConsole) 
-{
-	if (-not ((ping.exe scom.stage.stage -n 1) -match "^(.+)?could\snot\sfind\shost\s(.+)$")) 
-	{
-		if($DetailedOutput)
-    {
-        Import-Module \\scom.stage.stage\heart\Infrastructure.stage$\Scripts\Deploy.stage\StageDeploy.psm1 -Verbose -ErrorAction Continue
-    }
-    else
-    {
-        Import-Module \\scom.stage.stage\heart\Infrastructure.stage$\Scripts\Deploy.stage\StageDeploy.psm1 -ErrorAction SilentlyContinue | Out-Null
-    }
-  }
-  else 
-  {
-    Write-Warning 'Unable to ping host [scom.stage.stage]' -WarningAction:Continue
-  }    
-}
+
+# if ($StageConsole) 
+# {
+# 	if (-not ((ping.exe scom.stage.stage -n 1) -match "^(.+)?could\snot\sfind\shost\s(.+)$")) 
+# 	{
+# 		if($DetailedOutput)
+#     {
+#         Import-Module \\scom.stage.stage\heart\Infrastructure.stage$\Scripts\Deploy.stage\StageDeploy.psm1 -Verbose -ErrorAction Continue
+#     }
+#     else
+#     {
+#         Import-Module \\scom.stage.stage\heart\Infrastructure.stage$\Scripts\Deploy.stage\StageDeploy.psm1 -ErrorAction SilentlyContinue | Out-Null
+#     }
+#   }
+#   else 
+#   {
+#     Write-Warning 'Unable to ping host [scom.stage.stage]' -WarningAction:Continue
+#   }    
+# }
 
 if((Get-Command Get-ChildItemColor -ErrorAction SilentlyContinue) -eq $null)
 {
