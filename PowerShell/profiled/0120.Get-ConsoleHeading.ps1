@@ -9,7 +9,8 @@ function Get-ConsoleHeading () {
         'xtr v1.0',
         'destiny.games',
         'the abyss',
-        'choose your destiny'
+        'choose your destiny',
+        '#release'
         )
 
     if (-not $UsePredefinedRouletteValues) {

@@ -1,5 +1,6 @@
 [Void][Reflection.Assembly]::LoadWithPartialName("System.Collections.Generic")
 [Void][Reflection.Assembly]::LoadWithPartialName("Microsoft.Web.Administration")
+[void][Reflection.Assembly]::LoadWithPartialName("System.Drawing.dll")
 
 Import-Module PowerShellGet -ErrorAction Stop
 
