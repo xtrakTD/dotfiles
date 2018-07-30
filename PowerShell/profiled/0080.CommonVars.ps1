@@ -31,3 +31,10 @@ if(-not (Test-Path $env:USERPROFILE\.psreadline -PathType Container))
 {
     New-Item -Path $env:USERPROFILE -Name .psreadline -ItemType Directory
 }
+
+if (Test-Administrator) {   
+    [string]$AWSAccessKey = ''
+    [string]$AWSSecretKey = ''
+
+    Set-AWSCredential -AccessKey $AWSAccessKey -SecretKey $AWSSecretKey
+}
