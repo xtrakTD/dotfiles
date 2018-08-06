@@ -10,7 +10,7 @@ Function Set-XtrPSHazzTheme
         
             {
     	      "comment": "Dmitry Minin 2018",
-              "plugins": [ "git", "ssh", "z", "aliases", "xtr" ],
+              "plugins": [ "git", "z", "aliases", "xtr" ],
               "prompt": [
       	        [ "White", "", "$prompt_brakTop"],
     	        [ "White", "DarkRed", " $time " ],

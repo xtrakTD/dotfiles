@@ -11,6 +11,8 @@ if($DetailedOutput)
 }
 
 $ErrorView='NormalView'
+$ErrorActionPreference='Continue'
+$ErrorPreference='Continue'
 
 [string]$CredentialsPath="$env:USERPROFILE\.creds"
 
@@ -38,3 +40,5 @@ if (Test-Administrator) {
 
     Set-AWSCredential -AccessKey $AWSAccessKey -SecretKey $AWSSecretKey
 }
+
+[string]$BaseRepoPath = 'D:\source\repos\work'
